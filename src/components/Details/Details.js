@@ -19,15 +19,15 @@ function Details() {
     return (
         <main>
             <h1>Details Page</h1>
-            <h2>{movies[movieID-1].title}</h2>
-            <img src={movies[movieID-1].poster}/>
+            <h2>{movie[movieID-1].title}</h2>
+            <img src={movie[movieID-1].poster}/>
             <h2>Genres:</h2>
                 <ul>
                     {genres.map((item) => {
                         return <li key={item.id}>{item.name}</li>
                     })}
                 </ul>
-                <p>(movies[movieId-1].description)</p>
+                <p>{movie[movieId-1].description}</p>
                 <button onClick={() => handleClick()}>Return</button>
         </main>
 

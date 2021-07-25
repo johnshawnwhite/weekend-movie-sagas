@@ -8,19 +8,15 @@ function MovieList() {
 
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
+    const history = useHistory();
 
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
-    const handleDetailClick = event => {
-        event.preventDefault();
-        dispatch({
-            type: 'FETCH_DETAILS',
-            payload: movies.data,
-        });
-        useHistory('/details/id');
+    const handleDetailClick = () => {
+        history.push('/details/id');
     }
 
     // getDetails =(event, id) => {

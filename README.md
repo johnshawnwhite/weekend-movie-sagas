@@ -1,9 +1,8 @@
 # Project Name
 
-[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
+MOVIE SAGA
 
 ## Description
-
-Your project description goes here. What problem did you solve? How did you solve it?
+It is a movie adding and description site, though it does not yet work, it will by mid-week.
 
 Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
