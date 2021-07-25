@@ -13,7 +13,7 @@ function Details() {
     const genres = useSelector(store => store.genres);
 
 
-    consst handleClick = () => {
+    const handleClick = () => {
         history.push('/');
     }
     return (
