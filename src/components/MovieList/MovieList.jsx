@@ -18,9 +18,9 @@ function MovieList() {
         event.preventDefault();
         dispatch({
             type: 'FETCH_DETAILS',
-            payload: payload.data,
+            payload: movies.data,
         });
-        history.push('/details/id');
+        useHistory('/details/id');
     }
 
     // getDetails =(event, id) => {

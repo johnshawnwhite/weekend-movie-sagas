@@ -1,3 +1,4 @@
+import { FormControl, Select } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -44,23 +45,46 @@ function AddNew() {
         }
     };
     
-    const handleClick = () =>
+    const handleClick = () => {
+        history.push('/');
+    }
 
     
 
     return (
         <main>
             <h1>ADD MOVIES</h1>
-            <section className="edit">
-                {details.map(edit => {
-                    return (
-                        <div key={edit.id} >
-                            <h3>{edit.title}</h3>
-                            <img src={edit.poster} alt={edit.title}/>
-                        </div>
-                    );
-                })}
-            </section>
+            <form onSubmit={handleSubmit}>
+                <input type="text"
+                placeholder="Movie Title"
+                value={title}
+                onChange={event => setTitle(event.target.value)}/>
+                <input type="text"
+                placeholder="Movie Poster URL"
+                value={poster}
+                onChange={event => setPoster(event.target.value)}/>
+                <input type="text"
+                placeholder="Movie Description"
+                value={description}
+                onChange={event => setDescription(event.target.value)}/>
+                <formControl className={classes.formControl}></formControl>
+                <inputLabel id="select-label">Genre</inputLabel>
+                <Select
+                labelId="select-label"
+                id="select"
+                value={genre}
+                onChange={handleChange}>
+                    {allGenres.map(item => {
+                        return (
+                            <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
+                        )
+                    })}
+                </Select>
+                <input type="text"
+                placeholder="Movie Title"
+                value={title}
+                onChange={event => setTitle(event.target.value)}/>
+            </form>
         </main>
 
     );
