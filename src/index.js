@@ -15,6 +15,7 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('FETCH_DETAILS', fetchDetails)
+    yield takeEvery('ADD_MOVIE', addMovie)
 }
 
 function* fetchAllMovies() {
@@ -42,6 +43,16 @@ function* fetchDetails(action){
     }//end axios
 }//end getDetails
 
+function* addMovie(action) {
+    // get all movies from the DB
+    try {
+        yield axios.post('/api/movie', action.payload);
+    } catch {
+        console.log('add error');
+    }
+        
+}
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -65,15 +76,15 @@ const genres = (state = [], action) => {
     }
 }
 
-//creating the store for details of movies
-const details =(state = [], action) => {
-    switch (action.type) {
-        case 'SET_DETAILS':
-            return action.payload;
-        default:
-            return state;
-    }
-}
+// //creating the store for details of movies
+// const details =(state = [], action) => {
+//     switch (action.type) {
+//         case 'SET_DETAILS':
+//             return action.payload;
+//         default:
+//             return state;
+//     }
+// }
 
 // Create one store that all components can use
 const storeInstance = createStore(
