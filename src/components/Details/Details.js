@@ -13,7 +13,7 @@ function Details() {
 
     return (
         <main>
-            <h1>MovieList</h1>
+            <h1>Details Page</h1>
             <section className="details">
                 {details.map(details => {
                     return (
