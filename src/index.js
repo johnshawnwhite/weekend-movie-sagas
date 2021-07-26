@@ -19,7 +19,7 @@ function* rootSaga() {
     yield takeEvery('ADD_MOVIE', addMovie)
 }
 
-function* fetchAllMovies() {
+function* fetchAllGenres() {
     // get all movies from the DB
     try {
         const genres = yield axios.get('/api/AllGenres');
@@ -106,10 +106,18 @@ const allGenres =(state =[], action) => {
     }
 }
 
+const movieID = ( state = [], action) => {
+    if (action.type === "MOVIE_ID") {
+        return (state = action.payload);
+    }
+    return state;
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         movies,
+        movieID,
         genres,
         details,
         allGenres
