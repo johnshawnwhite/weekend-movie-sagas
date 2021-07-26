@@ -13,7 +13,7 @@ app.use(express.static('build'));
 /** ---------- ROUTES ---------- **/
 app.use('/api/movie', movieRouter);
 app.use('/api/genre', genreRouter);
-// app.use('/api/edit', editRouter)
+
 
 /** ---------- START SERVER ---------- **/
 app.listen(port, function () {

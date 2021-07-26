@@ -14,6 +14,9 @@ function MovieList() {
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
+    const addMovie = () => {
+        history.push('/addmovie')
+    }
 
     const handleDetailClick = () => {
         history.push('/details/id');
@@ -26,6 +29,7 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
+            <button onClick={addMovie}>ADD MOVIE</button>
             <section className="movies">
                 {movies.map(movie => {
                     return (

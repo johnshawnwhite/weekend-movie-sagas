@@ -1,10 +1,11 @@
 import { FormControl, Select } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
-function AddNew() {
+
+function AddMovie() {
 
     const [title, setTitle] = useState('');
     const [poster, setPoster] = useState('');
@@ -13,6 +14,7 @@ function AddNew() {
 
     const dispatch = useDispatch;
     const history = useHistory;
+    const classes = useStyles;
     const allGenres = useSelector(store => store.allGenres);
 
     useEffect(() => {
@@ -89,4 +91,4 @@ function AddNew() {
 
     );
 }
-export default Edit;
+export default AddMovie;
