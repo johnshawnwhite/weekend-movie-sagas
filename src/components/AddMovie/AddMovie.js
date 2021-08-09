@@ -5,16 +5,17 @@ import { useHistory } from "react-router-dom";
 // import { FormControl } from "@material-ui/core";
 
 function AddMovie() {
+  const dispatch = useDispatch;
+  const history = useHistory;
   const [title, setTitle] = useState("");
   const [poster, setPoster] = useState("");
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState(1);
-  const genres = useSelector(store => store.genres);
-
-  const dispatch = useDispatch;
-  const history = useHistory;
-//   const classes = useStyles;
   const allGenres = useSelector((store) => store.allGenres);
+
+  
+//   const classes = useStyles;
+  
 
   useEffect(() => {
     getGenres();
