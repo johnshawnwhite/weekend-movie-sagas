@@ -3,6 +3,7 @@ import './App.css';
 import MovieList from '../MovieList/MovieList';
 import Details from '../Details/Details';
 import AddMovie from '../AddMovie/AddMovie';
+import EditMovie from '../Edit/EditMovie';
 
 
 function App() {
@@ -13,11 +14,14 @@ function App() {
         <Route path="/" exact>
           <MovieList />
         </Route>
-        <Route path="/details">
+        <Route path="/details/:id">
           <Details/>
         </Route>
         <Route path='/AddMovie'>
           <AddMovie/>
+        </Route>
+        <Route path='/edit/:id'>
+          <EditMovie/>
         </Route>
       </Router>
     </div>
