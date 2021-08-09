@@ -8,7 +8,8 @@ function AddMovie() {
   const [title, setTitle] = useState("");
   const [poster, setPoster] = useState("");
   const [description, setDescription] = useState("");
-  const [genre, setGenre] = useState("");
+  const [genre, setGenre] = useState(1);
+  const genres = useSelector(store => store.genres);
 
   const dispatch = useDispatch;
   const history = useHistory;
@@ -16,8 +17,12 @@ function AddMovie() {
   const allGenres = useSelector((store) => store.allGenres);
 
   useEffect(() => {
-    dispatch();
+    getGenres();
   }, []);
+  
+  const getGenres = () => {
+    dispatch({ type: "FETCH_GENRES" });
+  };
 
   const handleChange = (event) => {
     setGenre(event.target.value);
