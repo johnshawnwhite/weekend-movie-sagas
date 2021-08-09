@@ -16,28 +16,6 @@ router.get('/', (req, res) => {
 
 });
 
-router.get('/:id', (req, res) => {
-  const detailsId = req.params.id;
-console.log(`details id`, detailsId);
-  // This query shows details to be displayed on details page.
-  // Returns multiple genres
-  const detailsQuery = 
-  `SELECT title, description, poster, genres.name
-  FROM movies
-  JOIN movies_genres on movies_genres.movie_id = movies.id
-  JOIN genres ON genres.id = movies_genres.genre_id
-  WHERE movies.id = $1;`;
-  pool.query(detailsQuery, [detailsId])
-    .then( result => {
-      console.log(`Details GET working`);
-      res.send(result.rows);
-    })
-    .catch(error => {
-      console.log('ERROR getting movie details', error);
-      res.sendStatus(500)
-    })
-});
-
 router.post('/', (req, res) => {
   console.log(req.body);
   // RETURNING "id" will give us back the id of the created movie
@@ -50,7 +28,7 @@ router.post('/', (req, res) => {
   pool.query(insertMovieQuery, [req.body.title, req.body.poster, req.body.description])
   .then(result => {
     console.log('New Movie Id:', result.rows[0].id); //ID IS HERE!
-    
+
     const createdMovieId = result.rows[0].id
 
     // Now handle the genre reference
@@ -73,21 +51,58 @@ router.post('/', (req, res) => {
     console.log(err);
     res.sendStatus(500)
   })
-})
+});
 
-router.get('/details/:id', (req, res) => {
-  //get movies details
-  const queryString = `SELECT * FROM "movies" WHERE "id" = $1;`;
-  const movieId = req.params.id;
+router.get('/', async (req, res) => {
+  try {
+    const response = await pool.query(`SELECT * FROM "movies" ORDER BY id;`);
+    res.send(response.rows);
+  } catch (error) {
+    console.log('Could not get all movies.', error);
+    res.sendStatus(500);
+  }
+});
 
-  pool.query(queryString, [movieId])
-  .then((responseDb) => {
-    res.send(responseDb.rows);
-  })
-  .catch((err) => {
-    console.log(err);
-    resS.sendStatus(500);
-  })
-})
+router.get('/details/:id', async (req, res) => {
+  try {
+    const response = await pool.query(`SELECT * FROM "movies" WHERE "id"=$1 LIMIT 1;`, [req.params.id]);
+    res.send(response.rows[0]);
+  } catch (error) {
+    console.log('Could not get movie details by id: ', error);
+    res.sendStatus(500);
+  }
+});
+
+router.get('/genres/:id', async (req, res) => {
+  try {
+    const response = await pool.query(`
+      SELECT *
+      FROM "movies_genres"
+      LEFT OUTER JOIN "genres" ON "genres".id = "movies_genres".genre_id
+      WHERE "movie_id" = $1;`, [req.params.id]);
+    res.send(response.rows);
+  } catch (error) {
+    console.log('Could not get genres by ID', error);
+    res.sendStatus(500);
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+  const response = await pool.query(
+    `
+    UPDATE "movies"
+    SET "title" = $1,
+      "description" = $2
+    WHERE "id" = $3;
+  `,
+    [req.body.title, req.body.description, req.params.id]
+  );
+  res.send(response.rows[0]);
+  } catch (error) {
+    console.log('Could not update movie', error);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;
