@@ -29,6 +29,24 @@ function EditMovie() {
     });
   }, []);
 
+  const onCancel = () => {
+    // if we're adding a movie
+    if (params.id === undefined) {
+      history.push('/');
+    }
+    // if we're editing a movie
+    else {
+      history.push(`/details/${params.id}`);
+    }
+  };
+
+  const onSave = () => {
+    dispatch({
+      type: 'SAVE_MOVIE',
+      payload: movie
+    });
+  }
+
 
 
 export default EditMovie;
