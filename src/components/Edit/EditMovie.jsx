@@ -48,5 +48,53 @@ function EditMovie() {
   }
 
 
+  return (<div>
+    <button onClick={onCancel}>Cancel</button>
+    <button onClick={onSave}>Save</button>
+    <div>
+      <input
+        placeholder="Title"
+        value={movie.title}
+        onChange={(event) => updateMovie({ title: event.target.value })}
+      />
+    </div>
+    <div>
+      <input
+        placeholder="Poster URL"
+        value={movie.poster}
+        onChange={(event) => updateMovie({ poster: event.target.value })}
+      />
+    </div>
+    {
+      // Only show genre select for new movie
+      params.id === undefined && <div>
+        <select onChange={event => updateMovie({ genre_id: Number(event.target.value)})}>
+          {genres.map(genre => (
+            <option key={genre.id} value={genre.id}>{genre.name}</option>
+          ))}
+        </select>
+      </div>
+    }
+
+    <div>
+      <textarea
+        placeholder="Description"
+        value={movie.description}
+        onChange={(event) => updateMovie({ description: event.target.value })}
+      />
+    </div>
+    <ul>
+      {
+        movie.genres &&
+        movie.genres.map(genre => (
+          genre && <li key={genre.id}>{genre.name}</li>
+        ))
+      }
+    </ul>
+  </div>
+);
+
+}
+
 
 export default EditMovie;
