@@ -1,36 +1,57 @@
 import { ListItemAvatar } from '@material-ui/core';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useParams} from "react-router-dom";
 
+function MovieDetails() {
 
-function Details() {
-
+    const movie = useSelector(store => store.selectedMovieDetails);
     const history = useHistory();
-
-    const movieID = useSelector(store => store.movieID);
-    const movies  = useSelector(store => store.movies);
-    const genres = useSelector(store => store.genres);
-
-
-    const handleClick = () => {
-        history.push('/');
+    const dispatch = useDispatch();
+    const params = useParams();
+  
+    // Fetch some data when page loads:
+    useEffect(() => {
+      dispatch({
+        type: 'GET_MOVIE_DETAILS',
+        payload: {
+          movieId: params.id
+        }
+      });
+    }, [params.id]);
+  
+    // Function to handle the display of the genre with checking for NULL values.
+    const displayGenres = (genres) => {
+      if(genres && genres.length > 0) {
+        return genres.map(genre => (<li key={genre.id}>{genre.name}</li>))
+      } else {
+        return (<p>No genres have been selected for this film.</p>);
+      }
     }
+  
     return (
-        <main>
-            <h1>Details Page</h1>
-            <h2>{movies[movieID-1].title.name}</h2>
-            <img src={movies[movieID-1].poster.name}/>
-            <h2>Genres:</h2>
-                <ul>
-                    {genres.map((item) => {
-                        return <li key={item.id}>{item.name}</li>
-                    })}
-                </ul>
-                <p>{movies[movieId-1].description}</p>
-                <button onClick={() => handleClick()}>Return</button>
-        </main>
-
-    );
-}
-export default Details;
+      <section>
+        <button onClick={() => history.push('/')}>Back to List</button>
+        <button onClick={() => history.push(`/edit/${params.id}`)}>Edit</button>
+        <article>
+        
+          <h2>{movie.title}</h2>
+          <img src={movie.poster}/>
+          <p>{movie.description}</p>
+          <ul>
+            {
+              movie.genres && movie.genres.map(genre =>
+                (genre && <li key={genre.id}>{genre.name}</li>)
+              )
+            }
+            {displayGenres(movie.genre)}
+          </ul>
+        </article>
+      </section>
+    )
+  
+  }
+  
+  
+  
+  export default MovieDetails;

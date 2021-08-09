@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import React from 'react';
+import { useEffect, useState  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ function EditMovie() {
       });
     } else {
       dispatch({
-        type: 'GET_MOVIE"DETAILS',
+        type: 'GET_MOVIE_DETAILS',
         payload: { movieId: params.id }
       });
     }
@@ -43,6 +44,13 @@ function EditMovie() {
   const onSave = () => {
     dispatch({
       type: 'SAVE_MOVIE',
+      payload: movie
+    });
+  }
+  
+  const updateMovie = () => {
+    dispatch({
+      type: 'UPDATE_EDIT_MOVIE',
       payload: movie
     });
   }
