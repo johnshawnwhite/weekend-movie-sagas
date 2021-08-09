@@ -10,7 +10,24 @@ function EditMovie() {
   const movie = useSelector(store => store.editMovie);
   const genres = useSelector(store => store.genres);
 
- 
+  useEffect(() => {
+    if (params.id === undefined) {
+      dispatch({
+        type: 'RESET_EDIT_DATA'
+      });
+    } else {
+      dispatch({
+        type: 'GET_MOVIE"DETAILS',
+        payload: { movieId: params.id }
+      });
+    }
+  }, [params.id]);
+
+  useEffect(() => {
+    dispatch({
+      type: 'GET_GENRES'
+    });
+  }, []);
 
 
 
